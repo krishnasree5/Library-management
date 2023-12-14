@@ -10,16 +10,21 @@ class Genre():
             self.books.append(book)
     
     def print_books(self):                                 #function to print all books in a given Genre
-        print("All books in",self.genre_name,"are")
+        print()
+        print("\t\t\t\tAll books in",self.genre_name,"are")
+        print()
         for book in self.books:
-            print("ID: ",book.ID)
-            print("Name: ",book.name)
-            print("Author: ",book.author)
-            print("Genre: ",book.genre_name)
-            print("Stock Left: ",book.stock)
+            print("\t\t\t\tID: ",book.ID)
+            print("\t\t\t\tName: ",book.name)
+            print("\t\t\t\tAuthor: ",book.author)
+            print("\t\t\t\tGenre: ",book.genre_name)
+            print("\t\t\t\tStock Left: ",book.stock)
+            print()
     
     def delete_book(self, book):
-        print("Book",book.name,"has been deleted.")
+        print()
+        print("\t\t\t\tBook",book.name,"has been deleted.")
+        print()
         self.books.remove(book)
         return
        
@@ -34,11 +39,13 @@ class Book(Genre):
         self.stock = stock
     
     def print_book(self):                                  #function to print a book
-        print("ID: ",self.ID)
-        print("Name: ",self.name)
-        print("Author: ",self.author)
-        print("Genre: ",self.genre_name)
-        print("Stock Left: ",self.stock)
+        print()
+        print("\t\t\t\tID: ",self.ID)
+        print("\t\t\t\tName: ",self.name)
+        print("\t\t\t\tAuthor: ",self.author)
+        print("\t\t\t\tGenre: ",self.genre_name)
+        print("\t\t\t\tStock Left: ",self.stock)
+        print()
 
 
 #creating instances of Genre
@@ -110,32 +117,34 @@ Science_Fiction.add_books(Dune, The_Hitchhikers_Guide_to_the_Galaxy, Frankenstei
 
 #view books genre-wise
 def view_by_genre():   
-    genre_name = input("Name of the genre: ")
+    genre_name = input("\t\t\t\tName of the genre: ")
     for genre in genre_list:
         if genre_name.lower() == genre.genre_name.lower():
             genre.print_books()
             return 
-    print("Genre not found")
+    print("\t\t\t\tGenre not found")
+    print()
     
 
 #view book based on it's name
 def view_book():
-    book_name = input("Name of the given book: ")
+    book_name = input("\t\t\t\tName of the given book: ")
     for genre in genre_list:
         for book in genre.books:
             if book.name.lower() == book_name.lower():
                 return book
-    return ("Book not found")
+    return ("\t\t\t\tBook not found")
+    print()
 
 
 #function to add book
 def add_book():
-    genre_name = input("Enter name of genre: ")
-    print("Enter book details: ")
-    book_name = input("Name: ")
-    book_author = input("Author: ")
-    num = input("Enter ID: ")                              #edge case: id alredy existing
-    stock = int(input("Enter stock: "))
+    genre_name = input("\t\t\t\tEnter name of genre: ")
+    print("\t\t\t\tEnter book details: ")
+    book_name = input("\t\t\t\tName: ")
+    book_author = input("\t\t\t\tAuthor: ")
+    num = input("\t\t\t\tEnter ID: ")                              #edge case: id alredy existing
+    stock = int(input("\t\t\t\tEnter stock: "))
     obj2 = Book(num, book_name, book_author, genre_name, stock)
     for i in genre_list:
         if i.genre_name.lower() == genre_name.lower():
@@ -144,15 +153,59 @@ def add_book():
         obj1 = Genre(genre_name)
         genre_list.append(obj1)
         obj1.add_books(obj2)
+    print("\t\t\t\t", book_name,"added successfully")
+    print()
 
 
 #function to delete a book
 def delete_book():
-    flag = 0
-    book_name = input("Enter the name of the book you want to delete: ")
+    book_name = input("\t\t\t\tEnter the name of the book you want to delete: ")
     for genre in genre_list:
         for book in genre.books:
             if book.name.lower() == book_name.lower():
                 genre.delete_book(book)                             
                 return 
-    print("Book",book_name,"not found in the library.")
+    print("\t\t\t\tBook",book_name,"not found in the library.")
+    print()
+
+def user_choice():
+    while(True):
+        print()
+        print("\t\t\t\t1) Search books by name")
+        print("\t\t\t\t2) View all books in a genre")
+        print("\t\t\t\t3) Add a book")
+        print("\t\t\t\t4) Delete a book")
+        print("\t\t\t\t5) Exit")
+        print()
+        choice = input("\t\t\t\tSelect an option: ")
+        if choice not in ['1', '2', '3', '4', '5']:
+            print("\t\t\t\tPlease select a valid option")
+        else:
+            if choice == '1':
+                result = view_book()
+                try:
+                    result.print_book()
+                except:
+                    print(result)
+
+            elif choice == '2':
+                view_by_genre()
+
+            elif choice == '3':
+                add_book()
+
+            elif choice == '4':
+                delete_book()
+
+            else:
+                print("\t\t\t\tThank you for using.")
+                break
+        
+
+#main function                  
+print('Library Mangement System'.center(88,'*'))
+print()
+print()
+print()
+print()
+user_choice()
